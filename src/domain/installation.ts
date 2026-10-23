@@ -1,0 +1,3 @@
+import { upstream } from "../data/upstream";
+export const checkoutCommands = `# Run on Linux. Choose a NEW checkout directory.\ntest ! -e './backfort-source' || exit 1\ngit clone 'https://github.com/shellharbor/backfort.git' './backfort-source'\ngit -C './backfort-source' checkout --detach '${upstream.commit}'\nbash './backfort-source/backfort.sh' --version`;
+export const installCommands = `# Review the pinned source first. Refuse to replace an existing installation.\nsudo install -d -o root -g root -m 0755 -- '/opt/backfort'\nsudo sh -c 'set -euC; umask 022; cat > "$1"; chown root:root -- "$1"; chmod 0755 -- "$1"; "$1" --version' sh '/opt/backfort/backfort.sh' < './backfort-source/backfort.sh'`;
