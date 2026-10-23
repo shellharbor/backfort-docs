@@ -67,6 +67,11 @@ test("durable files journey, download, copy fallback, locale, reset and accessib
       "\n",
     ),
   ).toBe(contents);
+  await page.getByRole("button", { name: "Switch to Russian" }).click();
+  await expect(page.locator(".preview").getByRole("status")).toHaveText(
+    "Скопировано.",
+  );
+  await page.getByRole("button", { name: "Переключить на английский" }).click();
   await page.evaluate(() =>
     Object.defineProperty(navigator, "clipboard", {
       value: { writeText: () => Promise.reject(new Error("denied")) },
@@ -80,6 +85,11 @@ test("durable files journey, download, copy fallback, locale, reset and accessib
   await expect(
     page.locator(".preview").getByLabel("Copy text manually"),
   ).toBeVisible();
+  await page.getByRole("button", { name: "Switch to Russian" }).click();
+  await expect(page.locator(".preview").getByRole("status")).toHaveText(
+    "Буфер обмена недоступен. Выделите текст ниже и скопируйте.",
+  );
+  await page.getByRole("button", { name: "Переключить на английский" }).click();
   const axe = await new AxeBuilder({ page }).analyze();
   expect(
     axe.violations.map((v) => ({
@@ -118,6 +128,16 @@ test("durable files journey, download, copy fallback, locale, reset and accessib
     }),
   ).toBeVisible();
   await expect(page.locator(".preview .code-block")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", {
+      name: "A little planning. A lot of peace of mind.",
+    }),
+  ).toBeInViewport();
+  await expect(
+    page.getByRole("heading", {
+      name: "A little planning. A lot of peace of mind.",
+    }),
+  ).toBeFocused();
 });
 test("offsite encryption, multiple jobs/destinations, invalid output and quick-compose", async ({
   page,

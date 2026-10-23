@@ -17,6 +17,8 @@
 
 ### Fixed during validation
 
+- Wizard navigation, validation links and reset now bring the destination step heading into view instead of leaving the user below the form.
+- Clipboard success and fallback notices now follow language changes. Added a complete five-step download/command-copy regression journey and enabled a touch/mobile Chromium profile.
 - Direct-anchor entry after React mount, narrow-grid overflow, code-scroll keyboard focus and muted-text contrast.
 - Multiline editing now retains a trailing newline while adding a second path; Advanced database choices and notices remain accurate after visibility/language changes.
 - YAML dependency updated to 2.9.1 after reviewing the nesting advisory; dependency audit is clean.

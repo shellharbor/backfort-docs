@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
+  workers: 2,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL:
@@ -13,8 +14,9 @@ export default defineConfig({
     {
       name: "mobile",
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices["Pixel 7"],
         viewport: { width: 360, height: 800 },
+        deviceScaleFactor: 1,
       },
     },
   ],

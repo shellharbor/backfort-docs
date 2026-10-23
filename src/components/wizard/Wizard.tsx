@@ -113,7 +113,7 @@ export function Wizard() {
   }
   function go(next: number) {
     setStep(next);
-    setTimeout(() => heading.current?.focus({ preventScroll: true }), 0);
+    setTimeout(() => heading.current?.focus(), 0);
   }
   function mode(next: Mode) {
     update((p) => {
@@ -1073,7 +1073,7 @@ export function Wizard() {
                     <button
                       key={i}
                       onClick={() => {
-                        setStep(issueStep(issue.field));
+                        go(issueStep(issue.field));
                         const match = issue.field.match(/^jobs\.(\d+)/);
                         if (match) setJobIndex(Number(match[1]));
                       }}
@@ -1300,7 +1300,7 @@ export function Wizard() {
           onClick={() => {
             setP(initialPlan());
             setJobIndex(0);
-            setStep(0);
+            go(0);
             setMessage("reset");
           }}
         >

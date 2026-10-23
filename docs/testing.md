@@ -18,6 +18,17 @@ Domain coverage includes multiple paths/jobs/destinations, target duplication, d
 
 Browser coverage: durable files through download, native clipboard and forced clipboard failure fallback; EN/RU and Basic/Advanced preservation; keyboard-entered multiline paths; multiple jobs and destination removal; local+rclone+age; quick-compose SQL/no invented flags; direct anchors/reload, production asset prefix, no console/404 errors, no runtime external requests/storage, keyboard skip link, reset, and automated axe accessibility on the final configuration state. Layouts are checked at **360, 390, 820 and 1280 px** in both languages. Windows clipboard line endings are normalized for comparison; YAML values and contents must still match.
 
+The mobile project uses the Pixel 7 Chromium profile with mobile user agent, touch and a conservative **360 × 800** viewport. This is browser emulation, not a physical Android/iOS device check. Two workers bound browser resource use. The separate five-step journey starts without a preset, checks heading visibility/focus after navigation, validation links and Back, downloads and parses `backfort.yaml`, and reads the actual clipboard after copying diagnostics and the real-run command. Paths with spaces and apostrophes must remain literal. Copy success and denied-clipboard messages must follow EN/RU changes; reset must return focus to the visible first step.
+
+To exercise the deployed site instead of a local server:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL = 'https://shellharbor.github.io/backfort-docs/'
+npm run test:e2e
+```
+
+The published-site review reproduced two issues before applying fixes: clicking Continue left the next heading above the viewport at 1280 × 720 and 360 × 800; switching EN to RU after copying left the success message in English. The new regression assertions failed against that deployed version.
+
 ## Opt-in actual-engine suite
 
 Linux with Node 22.12+, Bash 4.3+, Git, GNU tar/coreutils/findutils/gzip/flock/SHA tools and **Mike Farah yq v4**:
@@ -54,7 +65,7 @@ Actual successful checks in this session:
 
 ## Browser evidence and limits
 
-Both the preview browser suite and the final **ordinary-static-server prefix suite passed all 8 scenarios**. The final `npm run check` also passed all 69 domain tests, lint, strict TypeScript and build. Direct-entry anchors, minimum-width grid overflow, muted-text contrast and scrollable-code keyboard focus were corrected during verification. Screenshots are written to ignored `test-results/overview-*-{360,390,820,1280}.png`, `test-results/evidence-*-overview.png` and `test-results/evidence-*-wizard.png`; reports/traces are in ignored `playwright-report/` and `test-results/`. No benchmark, production backup, independent code review or exhaustive screen-reader audit is claimed.
+The initial preview suite passed all 8 scenarios; the expanded **ordinary-static-server prefix suite passed all 10 scenarios** after the published-site review fixes. The final `npm run check` also passed all 69 domain tests, lint, strict TypeScript and build. Direct-entry anchors, minimum-width grid overflow, muted-text contrast and scrollable-code keyboard focus were corrected during initial verification. The published-site review additionally corrected step scrolling/focus and copy-notice language updates. Screenshots are written to ignored `test-results/overview-*-{360,390,820,1280}.png`, `test-results/evidence-*-overview.png`, `test-results/evidence-*-wizard.png` and per-journey `test-results/wizard-flow-*/01-sources.png` through `05-copied-command.png`; reports/traces are in ignored `playwright-report/` and `test-results/`. No benchmark, production backup, independent code review or exhaustive screen-reader audit is claimed.
 
 Dependency audit reported **0 vulnerabilities** after updating yaml from 2.8.1 to **2.9.1** and adding the formatter. The initial yaml advisory was GHSA-48c2-rrv3-qjmp; no automatic force-upgrade was used.
 

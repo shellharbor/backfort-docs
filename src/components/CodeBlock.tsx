@@ -21,22 +21,24 @@ export function CodeBlock({
   filename?: string;
 }) {
   const t = useText();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<"copied" | "unavailable" | "">("");
   const [fallback, setFallback] = useState(false);
   const ref = useRef<HTMLTextAreaElement>(null);
+  const notices = {
+    copied: t("Copied.", "Скопировано."),
+    unavailable: t(
+      "Clipboard unavailable. Select the text below and copy it.",
+      "Буфер обмена недоступен. Выделите текст ниже и скопируйте.",
+    ),
+  };
   async function copy() {
     try {
       await navigator.clipboard.writeText(code);
-      setStatus(t("Copied.", "Скопировано."));
+      setStatus("copied");
       setFallback(false);
     } catch {
       setFallback(true);
-      setStatus(
-        t(
-          "Clipboard unavailable. Select the text below and copy it.",
-          "Буфер обмена недоступен. Выделите текст ниже и скопируйте.",
-        ),
-      );
+      setStatus("unavailable");
       setTimeout(() => {
         ref.current?.focus();
         ref.current?.select();
@@ -66,7 +68,7 @@ export function CodeBlock({
         <code>{code}</code>
       </pre>
       <span className="copy-status" role="status" aria-live="polite">
-        {status}
+        {status && notices[status]}
       </span>
       {fallback && (
         <textarea
